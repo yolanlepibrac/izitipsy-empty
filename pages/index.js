@@ -19,10 +19,15 @@ function columnItem(first, second, third, isLegend){
 
 function HomePage() {
 
+  function click(){
+    withDb()
+  }
+
+
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems: 'center' }}>
     <div onC></div>
-      <h1 style={{textAlign:"center"}}>SIMPLYK</h1>
+      <h1 style={{textAlign:"center"}} onClick={click}>SIMPLYK</h1>
       <h2  style={{textAlign:"center"}}>Bénéfices par prix du billet</h2>
       <div style={{width:200, height:10, backgroundColor:"black", alignItems:"center"}}></div>
       <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
