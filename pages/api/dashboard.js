@@ -1,5 +1,3 @@
-
-
 import withDb from "../../utils/db";
 
 const bankCharges = 2.9
@@ -28,6 +26,7 @@ export default withDb(async (req, res) => {
       </div>
 
       {columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
+
 
     </div>
   )
