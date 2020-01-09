@@ -1,6 +1,6 @@
 
-
 const bankCharges = 2.9
+const credentialDatabase = "mongodb://applicant:johndoethesuperapplicant0@ds019906.mlab.com:19906/heroku_l6prczn1"
 
 function columnItem(first, second, third, isLegend){
   return (
@@ -12,7 +12,10 @@ function columnItem(first, second, third, isLegend){
   )
 }
 
+
+
 function HomePage() {
+  
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems: 'center' }}>
       <h1 style={{textAlign:"center"}}>SIMPLYK</h1>
