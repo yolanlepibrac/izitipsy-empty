@@ -1,17 +1,21 @@
 
-import withDb from "../utils/db";
+//import withDb from "../utils/db";
 
 
 
 
 const bankCharges = 2.9
+const res = [
+  {price : "<20", number:220},
+  {price : "<40", number:320}
+ ]
 
 function columnItem(first, second, third, isLegend){
   return (
     <div id="tableLegend" style={{display:"flex", flexDirection:"row", width:500, justifyContent:"space-between"}}>
-      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15}}>{first}</p>
-      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15}}>{second}</p>
-      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15}}>{third}</p>
+      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15, textAlign:"center"}}>{first}</p>
+      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15, textAlign:"center"}}>{second}</p>
+      <p style={{fontWeight:isLegend?"bold":null, fontSize:isLegend?18:15, textAlign:"center"}}>{third}</p>
     </div>
   )
 }
@@ -36,6 +40,9 @@ function HomePage() {
       </div>
 
       {columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
+      {res.map((item)=> {
+        return (columnItem(item.price, item.number, "3"))
+      })}
 
 
     </div>
