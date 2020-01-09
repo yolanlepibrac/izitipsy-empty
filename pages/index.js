@@ -1,5 +1,7 @@
 
-//import withDb from "../utils/db";
+import getDatabase from "./api/dashboard";
+
+import fetch from 'isomorphic-unfetch'
 
 
 
@@ -21,16 +23,15 @@ function columnItem(first, second, third, isLegend){
 }
 
 
-function HomePage() {
+function HomePage({ db }) {
 
   function click(){
-    withDb()
+    console.log(db)
   }
 
 
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems: 'center' }}>
-    <div onC></div>
       <h1 style={{textAlign:"center"}} onClick={click}>SIMPLYK</h1>
       <h2  style={{textAlign:"center"}}>Bénéfices par prix du billet</h2>
       <div style={{width:200, height:10, backgroundColor:"black", alignItems:"center"}}></div>
@@ -49,6 +50,17 @@ function HomePage() {
   )
 
 };
+
+HomePage.getInitialProps = async ({ req }) => {
+
+  return {db : getDatabase()}
+  /*
+  const res = await fetch('https://api.github.com/repos/zeit/next.js')
+  const json = await res.json()
+  console.log(json)
+  return { db: json }
+  */
+}
 
 
 

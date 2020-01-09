@@ -5,6 +5,9 @@ import withDb from "../../utils/db";
 
 export default withDb(async (req, res) => {
 
-  console.log(res)
+  res.statusCode =200;
+  res.setHeader("content-Type", "application/json");
+  res.end();
+
 
 });
