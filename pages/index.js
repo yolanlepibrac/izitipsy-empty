@@ -3,7 +3,6 @@
 import fetch from 'isomorphic-unfetch'
 import React from "react";
 
-const bankCharges = 2.9
 const res = [
   {price : "<20", number:220},
   {price : "<40", number:320}
@@ -15,7 +14,9 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      bankCharges : 2.9
+    };
   }
 
   sortTicketsArray = (tickets) => {
@@ -54,8 +55,15 @@ class HomePage extends React.Component {
     this.setState({tabOfTickets})
   }
 
-  click = () => {
-    console.log("click")
+  getBenefice = (ticket) => {
+    return ticket.tips ? ticket.tips : 0  - this.state.bankCharges * ticket.amount
+  }
+  getAverage = (array) => {
+    let sum = 0
+    for (var i = 0; i < array.length; i++) {
+      sum += array[i]
+    }
+    return Math.round(sum/array.length*100)/100
   }
 
 
@@ -67,15 +75,13 @@ class HomePage extends React.Component {
         <div style={{width:200, height:10, backgroundColor:"black", alignItems:"center"}}></div>
         <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
           <p>Frais banquaires</p>
-          <p style={{fontSize:30, marginLeft:20}}>{bankCharges+" %"}</p>
+          <p style={{fontSize:30, marginLeft:20}}>{this.state.bankCharges+" %"}</p>
         </div>
 
         {this.columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
         {this.state.tabOfTickets && Object.entries(this.state.tabOfTickets).map(([key, value])=> {
-          return (this.columnItem("< "+key, value.length, "3"))
+          return (this.columnItem("< "+key + " $", value.length, this.getAverage(value.map((ticket)=>this.getBenefice(ticket)))+ " $") )
         })}
-
-
       </div>
     );
   }
