@@ -4,20 +4,6 @@ import fetch from 'isomorphic-unfetch'
 import React from "react";
 import Link from 'next/link';
 
-//import logo from './simplyk-logo.png';
-
-/*
-import getConfig from 'next/config'
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
-
-*/
-
-const res = [
-  {price : "<20", number:220},
-  {price : "<40", number:320}
- ]
-
 
 
 class HomePage extends React.Component {
@@ -126,9 +112,9 @@ class HomePage extends React.Component {
 
   render() {
     return (
-      <div style={{ display:"flex", flexDirection:"column", alignItems: 'center' }}>
+      <div id="container">
         <img id="logoSimplyk" src={"/images/simplyk-logo.png"} width="400px"></img>
-        <h2  style={{textAlign:"center"}}>Bénéfices par prix du billet</h2>
+        <h2>Bénéfices par prix du billet</h2>
 
         <div id="bankChargesContainer">
           <label>Frais banquaires</label>
@@ -146,8 +132,8 @@ class HomePage extends React.Component {
           }
         </div>
 
-        <div style={{width:200, height:10, backgroundColor:"black", alignItems:"center"}}></div>
-        <div style={{width:"100%", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}}>
+        <div id="separationLine"></div>
+        <div id="chargesLegend">
           <p>Frais banquaires</p>
           <p style={{fontSize:30, marginLeft:20}}>{this.state.bankCharges+" %"}</p>
         </div>
@@ -158,8 +144,18 @@ class HomePage extends React.Component {
         })}
         <style jsx>{`
         h1,
+
+        h2{
+          text-align : center
+        }
         a {
           font-family: 'Arial';
+        }
+
+        #container{
+          display:flex;
+          flex-direction:column;
+          align-items:center;
         }
 
         label{
@@ -193,6 +189,21 @@ class HomePage extends React.Component {
           padding-left:10px;
           border-radius:5px;
           color:rgba(53,117,65,1);
+        }
+
+        #separationLine{
+          width:200px;
+          height:10px;
+          background-color:black;
+          align-items:center
+        }
+
+        #chargesLegend{
+          width:100%;
+          display:flex;
+          flex-direction:row;
+          justify-content:center;
+          align-items:center;
         }
 
         button {
