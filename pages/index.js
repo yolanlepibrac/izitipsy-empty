@@ -18,6 +18,27 @@ class HomePage extends React.Component {
     this.state = {};
   }
 
+  sortTicketsArray = (tickets) => {
+
+    let ticketsSortedByAmount = {}
+    let greatestAmount = Math.max(...tickets.map((tickets)=>tickets.amount))
+    let amount = greatestAmount + 20 - greatestAmount%20
+
+    while (amount>0) {
+      for (var i = 0; i < tickets.length; i++) {
+        if(tickets[i].amount>=amount-20 && tickets[i].amount<amount){
+          if(!ticketsSortedByAmount[amount]){
+            ticketsSortedByAmount[amount] = []
+          }
+          ticketsSortedByAmount[amount].push(tickets[i])
+        }
+      }
+      amount = amount-20
+    }
+    console.log(ticketsSortedByAmount)
+    return ticketsSortedByAmount
+  }
+
   columnItem = (first, second, third, isLegend) => {
     return (
       <div id="tableLegend" style={{display:"flex", flexDirection:"row", width:500, justifyContent:"space-between"}}>
@@ -29,7 +50,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props.tickets)
+    let tabOfTickets = this.sortTicketsArray(this.props.ticketsDb.tickets)
+    this.setState({tabOfTickets})
   }
 
   click = () => {
@@ -49,8 +71,8 @@ class HomePage extends React.Component {
         </div>
 
         {this.columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
-        {res.map((item)=> {
-          return (this.columnItem(item.price, item.number, "3"))
+        {this.state.tabOfTickets && Object.entries(this.state.tabOfTickets).map(([key, value])=> {
+          return (this.columnItem("< "+key, value.length, "3"))
         })}
 
 
@@ -60,10 +82,10 @@ class HomePage extends React.Component {
 }
 
 HomePage.getInitialProps = async () => {
-  const tickets = await (
+  const ticketsDb = await (
     await fetch("http://localhost:3000/api/dashboard")
   ).json();
-  return { tickets };
+  return { ticketsDb };
 };
 
 
