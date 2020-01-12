@@ -57,7 +57,12 @@ class HomePage extends React.Component {
 
   getBenefice = (ticket) => {
     let tips = ticket.tips ? ticket.tips : 0
-    return  tips - this.state.bankCharges/100 * ticket.amount
+    if(ticket.amount !== 0){
+      return  (tips - 0.3 - this.state.bankCharges/100 * ticket.amount) * 100 / ticket.amount
+    }else{
+      return 0
+    }
+
   }
   getAverage = (array) => {
     let sum = 0
@@ -149,7 +154,7 @@ class HomePage extends React.Component {
 
         {this.columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
         {this.state.tabOfTickets && Object.entries(this.state.tabOfTickets).map(([key, value])=> {
-          return (this.columnItem("< "+key + " $", value.length, this.getAverage(value.map((ticket)=>this.getBenefice(ticket)))+ " $") )
+          return (this.columnItem("< "+key + " $", value.length, this.getAverage(value.map((ticket)=>this.getBenefice(ticket)))+ " %") )
         })}
         <style jsx>{`
         h1,
