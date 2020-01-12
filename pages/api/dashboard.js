@@ -1,13 +1,17 @@
+
+
 import withDb from "../../utils/db";
+import Ticket from "../../schemas/tickets";
 
 
+export default withDb((req, res) => {
 
-
-export default withDb(async (req, res) => {
-
-  res.statusCode =200;
-  res.setHeader("content-Type", "application/json");
-  res.end();
+  console.log(res)
+  Ticket.find({}, function(err, tickets) {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify({ tickets }));
+  });
 
 
 });
