@@ -16,11 +16,6 @@ class HomePage extends React.Component {
     };
   }
 
-  componentDidMount = () => {
-    let tabOfTickets = this.sortTicketsArray(this.props.ticketsDb.tickets, 20)
-    this.setState({tabOfTickets})
-  }
-
   sortTicketsArray = (tickets, rangeOfValues) => {
     let ticketsSortedByAmount = {}
     let greatestAmount = Math.max(...tickets.map((tickets)=>tickets.amount))
@@ -42,9 +37,10 @@ class HomePage extends React.Component {
 
 
   getBenefice = (ticket) => {
-    let tips = ticket.tips ? ticket.tips : 0
+    let tips = ticket.tips || 0
+    let totalAmount = ticket.total || ticket.amount + tips
     if(ticket.amount !== 0){
-      return  (tips - 0.3 - this.state.bankCharges/100 * ticket.amount) * 100 / ticket.amount
+      return  (tips - 0.3 - this.state.bankCharges/100 * totalAmount) * 100 / ticket.amount
     }else{
       return 0
     }
@@ -60,8 +56,6 @@ class HomePage extends React.Component {
 
   setBankCharges = (value) => {
     this.setState({bankCharges :value})
-    let tabOfTickets = this.sortTicketsArray(this.props.ticketsDb.tickets, this.state.rangeOfValues)
-    this.setState({tabOfTickets})
   }
 
   columnItem = (first, second, third, isLegend) => {
@@ -105,8 +99,6 @@ class HomePage extends React.Component {
 
   setValue = (value) => {
     this.setState({rangeOfValues : value})
-    let tabOfTickets = this.sortTicketsArray(this.props.ticketsDb.tickets, value)
-    this.setState({tabOfTickets})
   }
 
 
@@ -117,16 +109,16 @@ class HomePage extends React.Component {
         <h2>Bénéfices par prix du billet</h2>
 
         <div id="bankChargesContainer">
-          <label>Frais banquaires</label>
+          <label>Frais bancaires</label>
           <input id="inputBankCharge" type="number" min="0" max="10" step="0.1" value={this.state.bankCharges} onChange={e => this.setBankCharges(e.target.value)}>
           </input>
         </div>
 
-        <div id="buttonIntervalContainer">
-          <label>Interval de prix</label>
+        <div id="buttonintervalleContainer">
+          <label>intervalle de prix</label>
           {[5,10,20,50,100].map((value)=>{
             return (
-              <button className="buttonInterval" style={{backgroundColor:this.state.rangeOfValues===value ? "rgba(53,117,65,1)":null}} onClick={() => this.setValue(value)}>{value}
+              <button className="buttonintervalle" style={{backgroundColor:this.state.rangeOfValues===value ? "rgba(53,117,65,1)":null}} onClick={() => this.setValue(value)}>{value}
               </button>)
             })
           }
@@ -134,12 +126,12 @@ class HomePage extends React.Component {
 
         <div id="separationLine"></div>
         <div id="chargesLegend">
-          <p>Frais banquaires</p>
+          <p>Frais bancaires</p>
           <p style={{fontSize:30, marginLeft:20}}>{this.state.bankCharges+" %"}</p>
         </div>
 
         {this.columnItem("Montant du billet","Nombre de billets","Bénéfice moyen", true)}
-        {this.state.tabOfTickets && Object.entries(this.state.tabOfTickets).map(([key, value])=> {
+        {this.sortTicketsArray(this.props.ticketsDb.tickets, 20) && Object.entries(this.sortTicketsArray(this.props.ticketsDb.tickets, this.state.rangeOfValues)).map(([key, value])=> {
           return (this.columnItem("< "+key + " $", value.length, this.getAverage(value.map((ticket)=>this.getBenefice(ticket)))+ " %") )
         })}
         <style jsx>{`
@@ -214,19 +206,19 @@ class HomePage extends React.Component {
           outline: 1px solid #fff;
         }
 
-        #buttonIntervalContainer {
+        #buttonintervalleContainer {
           position:absolute;
           top:20px;
           right:20px;
         }
 
-        .buttonInterval {
+        .buttonintervalle {
           background-color : rgba(68,162,110);
           width:40px;
           height:30px;
         }
 
-        .buttonInterval:hover {
+        .buttonintervalle:hover {
           background-color : rgba(91,207,143);
         }
 
