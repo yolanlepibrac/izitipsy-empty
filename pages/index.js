@@ -20,7 +20,6 @@ class HomePage extends React.Component {
     let ticketsSortedByAmount = {}
     for (var i = 0; i < tickets.length; i++) {
       let roundValue = tickets[i].amount + rangeOfValues - tickets[i].amount%rangeOfValues
-      console.log(roundValue)
       if(!ticketsSortedByAmount[roundValue]){
           ticketsSortedByAmount[roundValue] = [tickets[i]]
       }else{
