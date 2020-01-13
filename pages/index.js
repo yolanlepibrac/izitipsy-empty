@@ -18,18 +18,14 @@ class HomePage extends React.Component {
 
   sortTicketsArray = (tickets, rangeOfValues) => {
     let ticketsSortedByAmount = {}
-    let greatestAmount = Math.max(...tickets.map((tickets)=>tickets.amount))
-    let amount = greatestAmount + rangeOfValues - greatestAmount%rangeOfValues
-    while (amount>0) {
-      for (var i = 0; i < tickets.length; i++) {
-        if(tickets[i].amount>=amount-rangeOfValues && tickets[i].amount<amount){
-          if(!ticketsSortedByAmount[amount]){
-            ticketsSortedByAmount[amount] = []
-          }
-          ticketsSortedByAmount[amount].push(tickets[i])
-        }
+    for (var i = 0; i < tickets.length; i++) {
+      let roundValue = tickets[i].amount + rangeOfValues - tickets[i].amount%rangeOfValues
+      console.log(roundValue)
+      if(!ticketsSortedByAmount[roundValue]){
+          ticketsSortedByAmount[roundValue] = [tickets[i]]
+      }else{
+          ticketsSortedByAmount[roundValue].push(tickets[i])
       }
-      amount = amount-rangeOfValues
     }
     console.log(ticketsSortedByAmount)
     return ticketsSortedByAmount
